@@ -15,8 +15,12 @@ const body = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "Pizzarela",
+  title: {
+    default: "Pizzarela",
+    template: "%s · Pizzarela",
+  },
   description: "Quem come pizza em casa — o cardápio do time.",
+  applicationName: "Pizzarela",
 };
 
 export default function RootLayout({
