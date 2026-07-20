@@ -32,10 +32,19 @@ npm run dev
 | `DATABASE_URL` | connection string **pooled** do Neon (ou Vercel Postgres) |
 
 3. Redeploy
-4. Depois do primeiro deploy, rode o seed uma vez:
+4. Depois do primeiro deploy, rode o seed (pessoas + cronograma 20/07 e 27/07):
 
 ```bash
-DATABASE_URL="sua-url" npm run db:seed
+curl -X POST "https://SEU-APP.vercel.app/api/seed" \
+  -H "x-seed-secret: pizzarela-seed"
+```
+
+Para resetar e popular de novo: acrescente `?force=1`.
+
+Ou localmente apontando pro Neon:
+
+```bash
+DATABASE_URL="postgresql://..." npm run db:seed
 ```
 
 SQLite **não** funciona na Vercel. Use Postgres.
