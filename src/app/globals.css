@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #2b150f;
+  --muted: #8b5e4b;
+  --mozzarella: #fffaf3;
+  --surface: #fffaf3ee;
+  --surface-2: #ffe4d6;
+  --wash: #fff0e8;
+  --line: #f0b9a0;
+  --tomato: #e6392b;
+  --tomato-deep: #c1121f;
+  --basil: #2d6a4f;
+  --crust: #f4a261;
+  --oven: #5c4033;
+  --accent: var(--tomato);
+  --accent-soft: #ffd2c8;
+  --today-bg: #fff3eb;
+  --holiday-bg: #e7f5e9;
+  --blob-a: #ff8a70aa;
+  --blob-b: #95d5b2aa;
+  --shadow: 0 20px 50px -28px rgba(193, 18, 31, 0.55);
+  --background: #fff5ee;
+  --foreground: var(--ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+button,
+input,
+select {
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+@keyframes float-slice {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-6deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(4deg);
+  }
+}
+
+@keyframes sizzle {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-float-slice {
+  animation: float-slice 4s ease-in-out infinite;
+}
+
+.animate-sizzle {
+  animation: sizzle 2.4s ease-in-out infinite;
+}

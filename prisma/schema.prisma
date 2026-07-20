@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Settings {
+  id        String @id @default("default")
+  adminPin  String
+  maxPerDay Int    @default(2)
+}
+
+model Person {
+  id                 String   @id @default(cuid())
+  name               String
+  color              String
+  blockedWeekdays    String   @default("[]") // JSON number[] 0=Mon..4=Fri
+  preferredWeekdays  String   @default("[]") // JSON number[]
+  fixedWeekday       Int? // 0=Mon..4=Fri
+  blockedDates       String   @default("[]") // JSON ISO date strings YYYY-MM-DD
+  active             Boolean  @default(true)
+  sortOrder          Int      @default(0)
+  createdAt          DateTime @default(now())
+  assignments        Assignment[]
+  swapsAsA           SwapLog[] @relation("SwapPersonA")
+  swapsAsB           SwapLog[] @relation("SwapPersonB")
+}
+
+model Holiday {
+  id     String @id @default(cuid())
+  date   String @unique // YYYY-MM-DD
+  name   String
+}
+
+model Assignment {
+  id        String   @id @default(cuid())
+  personId  String
+  date      String // YYYY-MM-DD
+  monthKey  String // YYYY-MM
+  createdAt DateTime @default(now())
+  person    Person   @relation(fields: [personId], references: [id], onDelete: Cascade)
+
+  @@unique([personId, date])
+  @@index([monthKey])
+  @@index([date])
+}
+
+model SwapLog {
+  id           String   @id @default(cuid())
+  personAId    String
+  personBId    String
+  dateABefore  String // YYYY-MM-DD (A's day before swap)
+  dateBBefore  String
+  createdAt    DateTime @default(now())
+  undone       Boolean  @default(false)
+  personA      Person   @relation("SwapPersonA", fields: [personAId], references: [id])
+  personB      Person   @relation("SwapPersonB", fields: [personBId], references: [id])
+}
