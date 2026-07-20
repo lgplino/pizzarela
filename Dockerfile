@@ -28,9 +28,9 @@ COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
 COPY --from=builder /app/src ./src
 
-# Persist SQLite outside the container when mounting a volume at /data
-ENV DATABASE_URL="file:/data/pizzarela.db"
-RUN mkdir -p /data && chown nextjs:nodejs /data
+# Persist DB via DATABASE_URL (Postgres). Example with Neon:
+# ENV DATABASE_URL=postgresql://...
+ENV DATABASE_URL="postgresql://postgres:postgres@localhost:5432/pizzarela?schema=public"
 
 USER nextjs
 EXPOSE 3000

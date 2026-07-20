@@ -8,29 +8,40 @@ Quem come pizza em casa — cardápio compartilhado do time. Todo mundo pode edi
 - Até 2 pessoas no mesmo dia
 - Trocas e alocações livres na interface
 
-## Setup
+## Setup local
+
+1. Crie um Postgres (ex.: [Neon](https://neon.tech) free)
+2. Copie a connection string
 
 ```bash
+cp .env.example .env
+# edite DATABASE_URL
 npm install
-npx prisma migrate dev
+npx prisma migrate deploy
 npm run db:seed
 npm run dev
 ```
 
-Abra [http://localhost:3000](http://localhost:3000).
+## Deploy na Vercel
 
-## Deploy (CloudFront)
+1. Importe o repo no Vercel
+2. Em **Settings → Environment Variables**, adicione:
 
-Este app é **Next.js com API + SQLite** — não roda como site estático puro no S3.
+| Name | Value |
+|------|--------|
+| `DATABASE_URL` | connection string **pooled** do Neon (ou Vercel Postgres) |
 
-Fluxo típico atrás do CloudFront:
-
-1. Subir o container (`Dockerfile`) em ECS/EC2/App Runner (ou similar)
-2. Apontar o CloudFront para essa origem (HTTP 3000)
-3. Montar volume em `/data` para persistir o SQLite
-4. Na primeira vez: `npm run db:seed` (ou rodar seed uma vez no container)
+3. Redeploy
+4. Depois do primeiro deploy, rode o seed uma vez:
 
 ```bash
-docker build -t pizzarela .
-docker run -p 3000:3000 -v pizzarela-data:/data pizzarela
+DATABASE_URL="sua-url" npm run db:seed
 ```
+
+SQLite **não** funciona na Vercel. Use Postgres.
+
+## Modos
+
+1. **Ver cardápio** — só olhar
+2. **Colocar / tirar** — escolher pessoa e clicar no dia
+3. **Trocar fatias** — duas pessoas, confirma troca
