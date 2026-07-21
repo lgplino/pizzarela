@@ -48,12 +48,13 @@ export function MonthCalendar({
   const holidayMap = new Map(holidays.map((h) => [h.date, h.name]));
 
   return (
-    <div className="overflow-hidden rounded-3xl border-2 border-[var(--tomato)]/30 bg-[var(--surface)] shadow-[var(--shadow)]">
+    <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:overflow-visible sm:px-0">
+      <div className="min-w-[32rem] overflow-hidden rounded-3xl border-2 border-[var(--tomato)]/30 bg-[var(--surface)] shadow-[var(--shadow)] sm:min-w-0">
       <div className="grid grid-cols-5 border-b-2 border-[var(--line)] bg-gradient-to-b from-[var(--tomato)] to-[var(--tomato-deep)]">
         {WEEKDAY_LABELS.map((label) => (
           <div
             key={label}
-            className="px-2 py-3 text-center text-xs font-extrabold uppercase tracking-wider text-white"
+            className="px-1 py-2.5 text-center text-[10px] font-extrabold uppercase tracking-wider text-white sm:px-2 sm:py-3 sm:text-xs"
           >
             {label}
           </div>
@@ -78,7 +79,7 @@ export function MonthCalendar({
                 dayAssignments.length < maxPerDay &&
                 placePersonId;
 
-              const cellClass = `min-h-[118px] p-2 text-left transition ${
+              const cellClass = `min-h-[96px] p-1.5 text-left transition sm:min-h-[118px] sm:p-2 ${
                 !inMonth ? "bg-[var(--wash)] opacity-40" : ""
               } ${isToday ? "bg-[var(--today-bg)] ring-2 ring-inset ring-[var(--tomato)]" : ""} ${
                 holiday ? "bg-[var(--holiday-bg)]" : ""
@@ -172,6 +173,7 @@ export function MonthCalendar({
             })}
           </div>
         ))}
+      </div>
       </div>
     </div>
   );

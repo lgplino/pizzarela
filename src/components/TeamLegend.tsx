@@ -23,13 +23,13 @@ export function TeamLegend({
   onSelectPlace,
 }: Props) {
   return (
-    <aside className="flex flex-col gap-4 rounded-3xl border-2 border-[var(--line)] bg-[var(--surface)] p-4 shadow-[var(--shadow)]">
+    <aside className="flex flex-col gap-3 rounded-3xl border-2 border-[var(--line)] bg-[var(--surface)] p-3 shadow-[var(--shadow)] sm:gap-4 sm:p-4">
       <div>
         <label className="text-[11px] font-extrabold uppercase tracking-wide text-[var(--muted)]">
           Eu sou
         </label>
         <select
-          className="mt-1 w-full rounded-xl border-2 border-[var(--line)] bg-[var(--mozzarella)] px-3 py-2 text-sm font-bold"
+          className="mt-1 w-full rounded-xl border-2 border-[var(--line)] bg-[var(--mozzarella)] px-3 py-2.5 text-sm font-bold sm:py-2"
           value={selectedId ?? ""}
           onChange={(e) => onSelectMe(e.target.value || null)}
         >
@@ -52,7 +52,7 @@ export function TeamLegend({
             Escolha alguém e clique num dia vazio.
           </p>
         )}
-        <ul className="mt-2 space-y-1.5">
+        <ul className="mt-2 grid grid-cols-2 gap-1.5 sm:grid-cols-1 sm:space-y-0">
           {people.map((p) => {
             const active = mode === "place" && placePersonId === p.id;
             return (
@@ -77,7 +77,9 @@ export function TeamLegend({
                   />
                   <span className="flex-1 truncate">{p.name}</span>
                   {hasAnyRestriction(p) && !active && (
-                    <span className="text-[10px] font-semibold text-[var(--muted)]">regras</span>
+                    <span className="hidden text-[10px] font-semibold text-[var(--muted)] sm:inline">
+                      regras
+                    </span>
                   )}
                 </button>
               </li>

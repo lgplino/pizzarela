@@ -1,30 +1,8 @@
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
+import { SEED_PEOPLE, SEED_SCHEDULE } from "../src/lib/seed-data";
 
 const prisma = new PrismaClient();
-
-const PEOPLE = [
-  { name: "Isa", color: "#E6392B" },
-  { name: "Bruno", color: "#2D6A4F" },
-  { name: "Jojo", color: "#F4A261" },
-  { name: "Rossi", color: "#457B9D" },
-  { name: "Lino", color: "#9B2226" },
-  { name: "Sala", color: "#6A994E" },
-];
-
-/** Cronograma das próximas duas semanas (jul/2026) */
-const SCHEDULE: { date: string; names: string[] }[] = [
-  { date: "2026-07-20", names: ["Rossi"] },
-  { date: "2026-07-21", names: ["Sala", "Jojo"] },
-  { date: "2026-07-22", names: [] },
-  { date: "2026-07-23", names: ["Bruno"] },
-  { date: "2026-07-24", names: ["Isa", "Lino"] },
-  { date: "2026-07-27", names: ["Lino"] },
-  { date: "2026-07-28", names: ["Isa"] },
-  { date: "2026-07-29", names: ["Rossi"] },
-  { date: "2026-07-30", names: ["Jojo"] },
-  { date: "2026-07-31", names: ["Sala", "Bruno"] },
-];
 
 async function main() {
   const pinHash = await bcrypt.hash("1234", 10);
@@ -40,14 +18,14 @@ async function main() {
   });
 
   const created: Record<string, string> = {};
-  for (let i = 0; i < PEOPLE.length; i++) {
-    const p = PEOPLE[i];
+  for (let i = 0; i < SEED_PEOPLE.length; i++) {
+    const p = SEED_PEOPLE[i];
     const row = await prisma.person.create({
       data: {
         name: p.name,
         color: p.color,
         blockedWeekdays: "[]",
-        preferredWeekdays: "[]",
+        preferredWeekdays: JSON.stringify(p.preferredWeekdays),
         fixedWeekday: null,
         blockedDates: "[]",
         sortOrder: i,
@@ -71,7 +49,7 @@ async function main() {
     ],
   });
 
-  for (const day of SCHEDULE) {
+  for (const day of SEED_SCHEDULE) {
     for (const name of day.names) {
       const personId = created[name.toLowerCase()];
       if (!personId) throw new Error(`Pessoa não encontrada: ${name}`);
@@ -85,8 +63,10 @@ async function main() {
     }
   }
 
-  console.log("Seed OK — Pizzarela com cronograma 20/07 e 27/07");
-  console.log(`${PEOPLE.length} pessoas, ${SCHEDULE.flatMap((s) => s.names).length} fatias`);
+  console.log("Seed OK — Pizzarela");
+  console.log(
+    `${SEED_PEOPLE.length} pessoas (Lino+Lucas preferem seg/qua/sex), ${SEED_SCHEDULE.flatMap((s) => s.names).length} fatias iniciais`,
+  );
 }
 
 main()

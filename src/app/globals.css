@@ -70,3 +70,53 @@ select {
 .animate-sizzle {
   animation: sizzle 2.4s ease-in-out infinite;
 }
+
+/* Mobile: blobs nos cantos. Desktop: tomate + manjericão juntos no topo. */
+.ambiance-blobs {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+}
+
+.ambiance-blobs .blob-tomato {
+  position: absolute;
+  left: -4rem;
+  top: 2.5rem;
+  height: 18rem;
+  width: 18rem;
+  border-radius: 9999px;
+  background: var(--blob-a);
+  filter: blur(64px);
+}
+
+.ambiance-blobs .blob-basil {
+  position: absolute;
+  right: -2.5rem;
+  top: 12rem;
+  height: 20rem;
+  width: 20rem;
+  border-radius: 9999px;
+  background: var(--blob-b);
+  filter: blur(64px);
+}
+
+@media (min-width: 1024px) {
+  .ambiance-blobs .blob-tomato {
+    left: 50%;
+    top: -2rem;
+    height: 22rem;
+    width: 22rem;
+    transform: translateX(-70%);
+  }
+
+  .ambiance-blobs .blob-basil {
+    left: 50%;
+    right: auto;
+    top: 1rem;
+    height: 20rem;
+    width: 20rem;
+    transform: translateX(-10%);
+  }
+}

@@ -49,8 +49,17 @@ DATABASE_URL="postgresql://..." npm run db:seed
 
 SQLite **não** funciona na Vercel. Use Postgres.
 
-## Modos
+## Geração automática (`POST /api/generate`)
 
-1. **Ver cardápio** — só olhar
-2. **Colocar / tirar** — escolher pessoa e clicar no dia
-3. **Trocar fatias** — duas pessoas, confirma troca
+Regras **só na geração** (edições manuais podem furar):
+
+- Seg–Qui: no máximo **1** pessoa
+- Sexta: **2** pessoas
+- Lino e Lucas preferem **seg / qua / sex** (soft)
+- 1 fatia por pessoa por semana, quando houver slot
+
+```bash
+curl -X POST "https://SEU-APP.vercel.app/api/generate" \
+  -H "Content-Type: application/json" \
+  -d '{"monthKey":"2026-08"}'
+```

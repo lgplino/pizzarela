@@ -1,33 +1,11 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
-
-const PEOPLE = [
-  { name: "Isa", color: "#E6392B" },
-  { name: "Bruno", color: "#2D6A4F" },
-  { name: "Jojo", color: "#F4A261" },
-  { name: "Rossi", color: "#457B9D" },
-  { name: "Lino", color: "#9B2226" },
-  { name: "Sala", color: "#6A994E" },
-];
-
-const SCHEDULE: { date: string; names: string[] }[] = [
-  { date: "2026-07-20", names: ["Rossi"] },
-  { date: "2026-07-21", names: ["Sala", "Jojo"] },
-  { date: "2026-07-22", names: [] },
-  { date: "2026-07-23", names: ["Bruno"] },
-  { date: "2026-07-24", names: ["Isa", "Lino"] },
-  { date: "2026-07-27", names: ["Lino"] },
-  { date: "2026-07-28", names: ["Isa"] },
-  { date: "2026-07-29", names: ["Rossi"] },
-  { date: "2026-07-30", names: ["Jojo"] },
-  { date: "2026-07-31", names: ["Sala", "Bruno"] },
-];
+import { SEED_PEOPLE, SEED_SCHEDULE } from "@/lib/seed-data";
 
 /**
  * POST /api/seed?force=1
  * Header: x-seed-secret: <SEED_SECRET>
- * Popula pessoas + cronograma das duas semanas.
  */
 export async function POST(request: Request) {
   const secret = process.env.SEED_SECRET ?? "pizzarela-seed";
@@ -66,14 +44,14 @@ export async function POST(request: Request) {
   });
 
   const created: Record<string, string> = {};
-  for (let i = 0; i < PEOPLE.length; i++) {
-    const p = PEOPLE[i];
+  for (let i = 0; i < SEED_PEOPLE.length; i++) {
+    const p = SEED_PEOPLE[i];
     const row = await prisma.person.create({
       data: {
         name: p.name,
         color: p.color,
         blockedWeekdays: "[]",
-        preferredWeekdays: "[]",
+        preferredWeekdays: JSON.stringify(p.preferredWeekdays),
         fixedWeekday: null,
         blockedDates: "[]",
         sortOrder: i,
@@ -98,7 +76,7 @@ export async function POST(request: Request) {
   });
 
   let assignments = 0;
-  for (const day of SCHEDULE) {
+  for (const day of SEED_SCHEDULE) {
     for (const name of day.names) {
       await prisma.assignment.create({
         data: {
@@ -113,8 +91,9 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     ok: true,
-    people: PEOPLE.length,
+    people: SEED_PEOPLE.length,
     assignments,
-    schedule: SCHEDULE.filter((d) => d.names.length > 0),
+    preferences: SEED_PEOPLE.filter((p) => p.preferredWeekdays.length).map((p) => p.name),
+    schedule: SEED_SCHEDULE.filter((d) => d.names.length > 0),
   });
 }

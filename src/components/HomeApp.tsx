@@ -190,35 +190,35 @@ export function HomeApp() {
       .filter(Boolean) ?? [];
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-x-hidden">
       <CheckeredBg />
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -left-16 top-10 h-72 w-72 rounded-full bg-[var(--blob-a)] blur-3xl" />
-        <div className="absolute -right-10 top-48 h-80 w-80 rounded-full bg-[var(--blob-b)] blur-3xl" />
+      <div className="ambiance-blobs" aria-hidden>
+        <div className="blob-tomato" />
+        <div className="blob-basil" />
       </div>
 
-      <header className="mx-auto max-w-6xl px-4 pb-2 pt-8 sm:px-6 sm:pt-10">
-        <div className="flex flex-wrap items-start justify-between gap-6">
-          <div className="flex items-start gap-4">
-            <div className="animate-float-slice">
-              <PizzaIcon className="h-16 w-16 drop-shadow-lg sm:h-20 sm:w-20" />
+      <header className="mx-auto max-w-6xl px-4 pb-2 pt-6 sm:px-6 sm:pt-10">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
+          <div className="flex min-w-0 items-start gap-3 sm:gap-4">
+            <div className="animate-float-slice shrink-0">
+              <PizzaIcon className="h-14 w-14 drop-shadow-lg sm:h-20 sm:w-20" />
             </div>
-            <div>
-              <p className="font-[family-name:var(--font-display)] text-5xl leading-none text-[var(--tomato)] sm:text-6xl">
+            <div className="min-w-0">
+              <p className="font-[family-name:var(--font-display)] text-4xl leading-none text-[var(--tomato)] sm:text-5xl lg:text-6xl">
                 Pizzarela
               </p>
-              <p className="mt-2 max-w-sm text-sm font-semibold text-[var(--muted)]">
+              <p className="mt-2 max-w-md text-sm font-semibold leading-snug text-[var(--muted)]">
                 O cardápio de quem come pizza em casa. Todo mundo pode mexer —
                 1 fatia por semana, até 2 na mesma mesa.
               </p>
-              <div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-extrabold text-[var(--basil)]">
+              <div className="mt-2 flex flex-wrap items-center gap-2 text-xs font-extrabold text-[var(--basil)] sm:mt-3">
                 <BasilIcon className="h-4 w-4" />
                 fresco · justo · com mussarela
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 self-end rounded-full border-2 border-[var(--line)] bg-[var(--surface)] p-1 shadow-[var(--shadow)]">
+          <div className="flex w-full items-center justify-center gap-1 self-stretch rounded-full border-2 border-[var(--line)] bg-[var(--surface)] p-1 shadow-[var(--shadow)] sm:w-auto sm:self-end lg:shrink-0">
             <button
               type="button"
               onClick={() => shiftMonth(-1)}
@@ -227,7 +227,7 @@ export function HomeApp() {
             >
               ←
             </button>
-            <h1 className="min-w-[9.5rem] text-center font-[family-name:var(--font-display)] text-xl text-[var(--ink)]">
+            <h1 className="min-w-0 flex-1 text-center font-[family-name:var(--font-display)] text-lg text-[var(--ink)] sm:min-w-[10rem] sm:flex-none sm:text-xl">
               {monthTitle(monthKey)}
             </h1>
             <button
@@ -242,20 +242,20 @@ export function HomeApp() {
         </div>
 
         {todayPeople.length > 0 ? (
-          <div className="mt-5 flex items-center gap-3 rounded-2xl border-2 border-[var(--tomato)]/40 bg-[var(--today-bg)] px-4 py-3">
-            <PizzaSliceIcon className="h-8 w-8 animate-sizzle" />
-            <p className="text-sm font-bold text-[var(--ink)]">
+          <div className="mt-4 flex items-center gap-3 rounded-2xl border-2 border-[var(--tomato)]/40 bg-[var(--today-bg)] px-3 py-3 sm:mt-5 sm:px-4">
+            <PizzaSliceIcon className="h-7 w-7 shrink-0 animate-sizzle sm:h-8 sm:w-8" />
+            <p className="text-sm font-bold leading-snug text-[var(--ink)]">
               Hoje comendo pizza:{" "}
               <span className="text-[var(--tomato)]">{todayPeople.join(" · ")}</span>
             </p>
           </div>
         ) : (
-          <div className="mt-5 rounded-2xl border-2 border-dashed border-[var(--line)] bg-[var(--surface)]/80 px-4 py-3 text-sm font-semibold text-[var(--muted)]">
+          <div className="mt-4 rounded-2xl border-2 border-dashed border-[var(--line)] bg-[var(--surface)]/80 px-3 py-3 text-sm font-semibold text-[var(--muted)] sm:mt-5 sm:px-4">
             Hoje o forno tá frio — ninguém na pizza.
           </div>
         )}
 
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-4 grid grid-cols-1 gap-2 sm:flex sm:flex-wrap">
           {(
             [
               ["view", "Ver cardápio"],
@@ -267,7 +267,7 @@ export function HomeApp() {
               key={id}
               type="button"
               onClick={() => setEditMode(id)}
-              className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${
+              className={`rounded-full px-4 py-2.5 text-sm font-extrabold transition sm:py-2 ${
                 mode === id
                   ? "bg-[var(--tomato)] text-white shadow-md"
                   : "bg-[var(--surface)] text-[var(--ink)] ring-2 ring-[var(--line)] hover:bg-[var(--surface-2)]"
@@ -292,8 +292,8 @@ export function HomeApp() {
         )}
       </header>
 
-      <main className="mx-auto grid max-w-6xl gap-6 px-4 pb-16 pt-4 sm:px-6 lg:grid-cols-[240px_1fr]">
-        <div className="space-y-4">
+      <main className="mx-auto grid max-w-6xl gap-5 px-4 pb-16 pt-4 sm:gap-6 sm:px-6 lg:grid-cols-[220px_minmax(0,1fr)] xl:grid-cols-[240px_minmax(0,1fr)]">
+        <div className="order-2 space-y-4 lg:order-1 lg:sticky lg:top-4 lg:self-start">
           {data && (
             <TeamLegend
               people={data.people}
@@ -306,7 +306,7 @@ export function HomeApp() {
           )}
         </div>
 
-        <div className="space-y-4">
+        <div className="order-1 min-w-0 space-y-4 lg:order-2">
           {loading && !data ? (
             <p className="text-sm font-bold text-[var(--muted)]">Abrindo a pizzaria…</p>
           ) : data ? (
@@ -348,8 +348,8 @@ export function HomeApp() {
           {mode === "place" && (
             <p className="rounded-2xl bg-[var(--surface)]/90 px-4 py-3 text-sm font-semibold text-[var(--muted)] ring-2 ring-[var(--line)]">
               <strong className="text-[var(--tomato)]">Dica:</strong> escolher a pessoa na
-              lateral, clicar no dia pra colocar. Clicar numa fatia existente remove.
-              Se a pessoa já tinha pizza na semana, a fatia antiga sai sozinha.
+              equipe, clicar no dia pra colocar. Clicar numa fatia existente remove. Se a
+              pessoa já tinha pizza na semana, a fatia antiga sai sozinha.
             </p>
           )}
         </div>
