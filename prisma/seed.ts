@@ -65,7 +65,7 @@ async function main() {
 
   console.log("Seed OK — Pizzarela");
   console.log(
-    `${SEED_PEOPLE.length} pessoas (Lino+Lucas preferem seg/qua/sex), ${SEED_SCHEDULE.flatMap((s) => s.names).length} fatias iniciais`,
+    `${SEED_PEOPLE.length} pessoas (Lino+Rossi preferem seg/qua/sex), ${SEED_SCHEDULE.flatMap((s) => s.names).length} fatias iniciais`,
   );
 }
 

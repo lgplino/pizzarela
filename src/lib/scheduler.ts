@@ -37,7 +37,7 @@ function scoreAssignment(
 ): number {
   const counts = fairness.get(person.id) ?? emptyCounts();
   const fixedBonus = person.fixedWeekday === workdayIndex ? 1000 : 0;
-  // Soft preference (Lucas/Lino → seg/qua/sex) — fairness must outweigh stacking
+  // Soft preference (Lino/Rossi → seg/qua/sex) — fairness must outweigh stacking
   const preferredBonus = person.preferredWeekdays.includes(workdayIndex) ? 70 : 0;
   const personalFairnessPenalty = counts[workdayIndex] * 50;
   const dayFillPenalty = dayFill * 40;

@@ -55,7 +55,7 @@ Regras **só na geração** (edições manuais podem furar):
 
 - Seg–Qui: no máximo **1** pessoa
 - Sexta: **2** pessoas
-- Lino e Lucas preferem **seg / qua / sex** (soft)
+- Lino e Rossi preferem **seg / qua / sex** (soft)
 - 1 fatia por pessoa por semana, quando houver slot
 
 ```bash

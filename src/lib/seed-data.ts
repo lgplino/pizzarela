@@ -13,10 +13,10 @@ export const SEED_PEOPLE: SeedPerson[] = [
   { name: "Isa", color: "#E6392B", preferredWeekdays: [] },
   { name: "Bruno", color: "#2D6A4F", preferredWeekdays: [] },
   { name: "Jojo", color: "#F4A261", preferredWeekdays: [] },
-  { name: "Rossi", color: "#457B9D", preferredWeekdays: [] },
+  { name: "Rossi", color: "#457B9D", preferredWeekdays: PREFER_MON_WED_FRI },
   { name: "Lino", color: "#9B2226", preferredWeekdays: PREFER_MON_WED_FRI },
   { name: "Sala", color: "#6A994E", preferredWeekdays: [] },
-  { name: "Lucas", color: "#7C3AED", preferredWeekdays: PREFER_MON_WED_FRI },
+  { name: "Grilo", color: "#CA8A04", preferredWeekdays: [] },
 ];
 
 export const SEED_SCHEDULE: { date: string; names: string[] }[] = [
